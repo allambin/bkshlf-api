@@ -1,5 +1,6 @@
 package com.example.bkshlf.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name="books")
-public class Book {
+@Table(name="authors")
+public class Author {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -20,11 +21,8 @@ public class Book {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String title;
-    @ManyToMany
-    @JoinTable(
-        name = "book_authors",
-        joinColumns = @JoinColumn(name = "book_id"),
-        inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
+    private String name;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books = new HashSet<>();
 }
