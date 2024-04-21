@@ -1,5 +1,6 @@
 package com.example.bkshlf.service;
 
+import com.example.bkshlf.model.LoginRequest;
 import com.example.bkshlf.model.RegistrationRequest;
 import com.example.bkshlf.model.User;
 import com.example.bkshlf.repository.UserRepository;
@@ -21,9 +22,20 @@ public class UserService
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(long id)
+    public Optional<User> loginUser(LoginRequest request)
     {
-        return userRepository.findById(id);
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        if (user.isPresent() && passwordMatches(user.get(), request.getPassword())) {
+            return user;
+        }
+
+        return Optional.empty();
+    }
+
+    private boolean passwordMatches(User user, String password)
+    {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     public User registerUser(RegistrationRequest request)
