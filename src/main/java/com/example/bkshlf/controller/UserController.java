@@ -1,0 +1,38 @@
+package com.example.bkshlf.controller;
+
+import com.example.bkshlf.dto.UserDTO;
+import com.example.bkshlf.model.RegistrationRequest;
+import com.example.bkshlf.model.User;
+import com.example.bkshlf.response.UserWrapper;
+import com.example.bkshlf.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/users")
+@Validated
+public class UserController
+{
+    private final UserService userService;
+
+    public UserController(UserService userService)
+    {
+        this.userService = userService;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserWrapper> register(@Valid @RequestBody RegistrationRequest request)
+    {
+        User registeredUser = userService.registerUser(request);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(registeredUser.getId());
+        userDTO.setEmail(registeredUser.getEmail());
+
+        return ResponseEntity.ok(new UserWrapper(userDTO));
+    }
+}
