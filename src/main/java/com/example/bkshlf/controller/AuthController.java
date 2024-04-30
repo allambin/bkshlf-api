@@ -1,12 +1,15 @@
 package com.example.bkshlf.controller;
 
 import com.example.bkshlf.config.RequestError;
+import com.example.bkshlf.dto.LoginResponse;
 import com.example.bkshlf.dto.UserDTO;
 import com.example.bkshlf.model.LoginRequest;
 import com.example.bkshlf.model.User;
 import com.example.bkshlf.response.UserWrapper;
+import com.example.bkshlf.service.AuthService;
 import com.example.bkshlf.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 @RestController
@@ -22,28 +26,15 @@ import java.util.Optional;
 @Validated
 public class AuthController
 {
-    private final UserService userService;
+    private final AuthService authService;
 
-    public AuthController(UserService userService)
+    public AuthController(AuthService authService)
     {
-        this.userService = userService;
+        this.authService = authService;
     }
 
     @PostMapping()
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request)
-    {
-        Optional<User> optionalUser = userService.loginUser(request);
-        User user = optionalUser.orElse(null);
-
-        if (user != null) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setEmail(user.getEmail());
-
-            return ResponseEntity.ok(new UserWrapper(userDTO));
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new RequestError("User not found"));
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) throws NoSuchAlgorithmException {
+        return ResponseEntity.ok(authService.loginUser(request));
     }
 }

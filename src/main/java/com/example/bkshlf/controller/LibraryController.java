@@ -4,11 +4,11 @@ import com.example.bkshlf.model.Book;
 import com.example.bkshlf.response.BooksWrapper;
 import com.example.bkshlf.service.LibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,5 +28,11 @@ public class LibraryController
     {
         List<Book> books = libraryService.getAllBooks();
         return new BooksWrapper(books);
+    }
+
+    @GetMapping("private-library")
+    public ResponseEntity<String> test()
+    {
+        return ResponseEntity.ok("Private library");
     }
 }

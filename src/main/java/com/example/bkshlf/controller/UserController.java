@@ -6,6 +6,7 @@ import com.example.bkshlf.model.User;
 import com.example.bkshlf.response.UserWrapper;
 import com.example.bkshlf.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 @Validated
+@RequiredArgsConstructor
 public class UserController
 {
     private final UserService userService;
-
-    public UserController(UserService userService)
-    {
-        this.userService = userService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<UserWrapper> register(@Valid @RequestBody RegistrationRequest request)
