@@ -22,4 +22,9 @@ public class LibraryService
     {
         return bookRepository.findAll();
     }
+
+    public Book getBookWithEdition(String bookId, long editionId)
+    {
+        return bookRepository.findWithEdition(bookId, editionId);
+    }
 }

@@ -1,9 +1,13 @@
 package com.example.bkshlf.response;
 
 import com.example.bkshlf.model.Book;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 public class BooksWrapper
 {
     private List<Book> books;
@@ -13,13 +17,4 @@ public class BooksWrapper
         this.books = books;
     }
 
-    public List<Book> getBooks()
-    {
-        return books;
-    }
-
-    public void setBooks(List<Book> books)
-    {
-        this.books = books;
-    }
 }

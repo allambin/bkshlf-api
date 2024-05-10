@@ -29,10 +29,4 @@ public class LibraryController
         List<Book> books = libraryService.getAllBooks();
         return new BooksWrapper(books);
     }
-
-    @GetMapping("private-library")
-    public ResponseEntity<String> test()
-    {
-        return ResponseEntity.ok("Private library");
-    }
 }

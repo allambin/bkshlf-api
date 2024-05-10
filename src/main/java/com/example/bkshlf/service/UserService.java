@@ -22,8 +22,6 @@ public class UserService
 {
     private final UserRepository userRepository;
 
-
-
     private boolean passwordMatches(User user, String password)
     {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
