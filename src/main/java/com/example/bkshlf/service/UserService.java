@@ -38,4 +38,14 @@ public class UserService
         newUser.setPassword(encodedPassword);
         return userRepository.save(newUser);
     }
+
+    public User findUser(String email)
+    {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public void deleteUser(Long id)
+    {
+        userRepository.deleteById(id);
+    }
 }
