@@ -1,28 +1,36 @@
-//package com.example.bkshlf.service;
-//
-//import com.example.bkshlf.model.Book;
-//import com.example.bkshlf.model.Review;
-//import com.example.bkshlf.model.User;
-//import com.example.bkshlf.repository.BookRepository;
-//import com.example.bkshlf.repository.ReviewRepository;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class ReviewService
-//{
-//    private final ReviewRepository reviewRepository;
-//    private final LibraryService libraryService;
-//
-//    public List<Review> getAllReviewsForBook(String bookId)
-//    {
-//        return null;
-////        return reviewRepository.findAllForBookId(bookId);
-//    }
-//
+package com.example.bkshlf.service;
+
+import com.example.bkshlf.model.Book;
+import com.example.bkshlf.model.Review;
+import com.example.bkshlf.model.User;
+import com.example.bkshlf.repository.BookRepository;
+import com.example.bkshlf.repository.ReviewRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ReviewService
+{
+    private final ReviewRepository reviewRepository;
+
+    public List<Review> getAllReviewsForBook(String bookId)
+    {
+        return reviewRepository.findAllForBookId(bookId);
+    }
+
+    public double calculateAverageRatingForBook(String bookId)
+    {
+        return reviewRepository.getAverageRatingForBookId(bookId);
+    }
+
+    public long getTotalReviewsCountForBook(String bookId)
+    {
+        return reviewRepository.countAllForBookId(bookId);
+    }
+
 //    public Review createReview(User user, String bookId, long editionId, String content)
 //    {
 //        Book book = libraryService.getBookWithEdition(bookId, editionId);
@@ -36,7 +44,7 @@
 //        review.setUser(user);
 //        return reviewRepository.save(review);
 //    }
-//
+
 //    public Review updateReview(User user, String bookId, long editionId, String content)
 //    {
 //        Book book = libraryService.getBookWithEdition(bookId, editionId);
@@ -56,4 +64,4 @@
 ////        review.setUser(user);
 ////        return reviewRepository.save(review);
 //    }
-//}
+}

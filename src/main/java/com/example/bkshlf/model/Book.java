@@ -21,7 +21,8 @@ public class Book {
     )
     private String id;
     private String title;
-    private int series_order;
+    private String description;
+    private Integer series_order;
     @ManyToMany
     @JoinTable(
         name = "book_authors",

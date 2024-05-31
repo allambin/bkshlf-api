@@ -4,9 +4,11 @@ CREATE TABLE reviews (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     book_id VARCHAR(36),
     user_id BIGINT,
-    edition_id BIGINT NULL,
+    rating INT CHECK (rating >= 1 AND rating <= 5),
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (book_id) REFERENCES books(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (edition_id) REFERENCES editions(id),
     UNIQUE(book_id, user_id)
 );
