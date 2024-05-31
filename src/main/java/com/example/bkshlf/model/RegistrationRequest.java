@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RegistrationRequest
+public class RegistrationRequest // todo move into own package
 {
     @NotEmpty(message = "The email address is required.")
     @Email(message = "The email address is invalid.", flags = { Pattern.Flag.CASE_INSENSITIVE })

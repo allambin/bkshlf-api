@@ -29,9 +29,12 @@ public class SecurityConfig
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
         http
+//                .authorizeHttpRequests((authorize) -> authorize
+//                        .requestMatchers("/auth", "auth", "/users/register", "users/register", "books/*").permitAll()
+//                        .anyRequest().authenticated()
+//                )
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth", "auth", "/users/register", "users/register").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())

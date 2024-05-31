@@ -21,6 +21,7 @@ public class Book {
     )
     private String id;
     private String title;
+    private int series_order;
     @ManyToMany
     @JoinTable(
         name = "book_authors",
@@ -30,4 +31,8 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Edition> editions = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "series_id")
+    private Series series;
 }

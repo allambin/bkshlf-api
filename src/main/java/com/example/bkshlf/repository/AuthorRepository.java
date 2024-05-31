@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface AuthorRepository extends JpaRepository<Author, String>
 {
     @Query("SELECT a FROM Author a LEFT JOIN FETCH a.books WHERE a.id = ?1")
-    Author findIdWithBooks(String id);
+    Author findIdWithBooks(String id); // todo rename
 }
