@@ -10,5 +10,5 @@ public class ReviewRequest
 {
     @NotEmpty(message = "The content is required.")
     private String content;
-    private long editionId;
+    private int rating;
 }
