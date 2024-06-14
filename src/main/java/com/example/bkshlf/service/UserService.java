@@ -1,6 +1,8 @@
 package com.example.bkshlf.service;
 
 import com.example.bkshlf.dto.LoginResponse;
+import com.example.bkshlf.event.EventPublisherService;
+import com.example.bkshlf.event.UserRegisteredEvent;
 import com.example.bkshlf.model.LoginRequest;
 import com.example.bkshlf.model.RegistrationRequest;
 import com.example.bkshlf.model.User;
@@ -21,6 +23,8 @@ import java.util.Optional;
 public class UserService
 {
     private final UserRepository userRepository;
+    @Autowired
+    private EventPublisherService publisherService;
 
     private boolean passwordMatches(User user, String password)
     {
@@ -36,7 +40,12 @@ public class UserService
         User newUser = new User();
         newUser.setEmail(request.getEmail());
         newUser.setPassword(encodedPassword);
-        return userRepository.save(newUser);
+        var user = userRepository.save(newUser);
+
+        UserRegisteredEvent event = new UserRegisteredEvent(this, user);
+        publisherService.publishEvent(event);
+
+        return user;
     }
 
     public User findUser(String email)

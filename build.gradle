@@ -53,6 +53,7 @@ dependencies {
 	implementation("io.insert-koin:koin-core")
 	implementation 'io.insert-koin:koin-test:3.5.6'
 	testImplementation "io.mockk:mockk:1.13.11"
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
