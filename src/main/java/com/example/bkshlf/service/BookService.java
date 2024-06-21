@@ -34,29 +34,29 @@ public class BookService
         return bookRepository.findById(id).orElseThrow(() -> new RestException(HttpStatus.NOT_FOUND, "Book with id " + id + " not found"));
     }
 
-    protected BookResource toNakedResource(Book book)
-    {
-        BookResource resource = new BookResource();
-        resource.setId(book.getId());
-        resource.setTitle(book.getTitle());
-        resource.setSeries(book.getSeries());
-
-        return resource;
-    }
-
-    public Map<String, Object> toResource(Book book)
-    {
-        BookResource resource = toNakedResource(book);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put(BookResource.wrapper, resource);
-
-        return response;
-    }
-
-    public Map<String, List<BookResource>> toCollection(List<Book> books)
-    {
-        List<BookResource> collection = books.stream().map(this::toNakedResource).toList();
-        return Collections.singletonMap(BookResource.collectionWrapper, collection);
-    }
+//    protected BookResource toNakedResource(Book book)
+//    {
+//        BookResource resource = new BookResource();
+//        resource.setId(book.getId());
+//        resource.setTitle(book.getTitle());
+//        resource.setSeries(book.getSeries());
+//
+//        return resource;
+//    }
+//
+//    public Map<String, Object> toResource(Book book)
+//    {
+//        BookResource resource = toNakedResource(book);
+//
+//        Map<String, Object> response = new HashMap<>();
+//        response.put(BookResource.wrapper, resource);
+//
+//        return response;
+//    }
+//
+//    public Map<String, List<BookResource>> toCollection(List<Book> books)
+//    {
+//        List<BookResource> collection = books.stream().map(this::toNakedResource).toList();
+//        return Collections.singletonMap(BookResource.collectionWrapper, collection);
+//    }
 }

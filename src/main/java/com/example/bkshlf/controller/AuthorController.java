@@ -4,9 +4,13 @@ import com.example.bkshlf.dto.AuthorWithBooksDTO;
 import com.example.bkshlf.dto.BookDTO;
 import com.example.bkshlf.model.Author;
 import com.example.bkshlf.model.Book;
+import com.example.bkshlf.resource.AuthorResource;
+import com.example.bkshlf.resource.BookResource;
+import com.example.bkshlf.resource.Resource;
 import com.example.bkshlf.response.AuthorWrapper;
 import com.example.bkshlf.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +31,14 @@ public class AuthorController
         this.authorService = authorService;
     }
 
-    @GetMapping("/show/{authorId}")
-    public AuthorWrapper show(@PathVariable("authorId") String authorId)
+    @GetMapping("/{authorId}")
+    public ResponseEntity<Object> show(@PathVariable("authorId") String authorId)
     {
         Author author = authorService.getAuthorWithBooks(authorId);
-        AuthorWithBooksDTO authorWithBooksDTO = mapAuthorToDTO(author);
-        return new AuthorWrapper(authorWithBooksDTO);
+//        AuthorWithBooksDTO authorWithBooksDTO = mapAuthorToDTO(author);
+        return ResponseEntity.ok().body(Resource.toResource(author, AuthorResource.class));
+
+//        return new AuthorWrapper(authorWithBooksDTO);
     }
 
     private AuthorWithBooksDTO mapAuthorToDTO(Author author)

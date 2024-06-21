@@ -3,7 +3,8 @@ package com.example.bkshlf.controller;
 import com.example.bkshlf.model.Review;
 import com.example.bkshlf.model.User;
 import com.example.bkshlf.request.ReviewRequest;
-import com.example.bkshlf.response.ReviewsWrapper;
+import com.example.bkshlf.resource.Resource;
+import com.example.bkshlf.resource.ReviewResource;
 import com.example.bkshlf.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,16 +25,20 @@ public class ReviewController
     private final ReviewService reviewService;
 
     @GetMapping("/books/{bookId}/reviews")
-    public ReviewsWrapper showAllForBook(@PathVariable("bookId") String bookId)
+    public ResponseEntity<Object> showAllForBook(@PathVariable("bookId") String bookId)
     {
         List<Review> reviews = reviewService.getAllReviewsForBook(bookId);
         double averageRating = reviewService.calculateAverageRatingForBook(bookId);
         long totalReviews = reviewService.getTotalReviewsCountForBook(bookId);
-        ReviewsWrapper wrapper = new ReviewsWrapper();
-        wrapper.setReviews(reviews);
-        wrapper.setTotalReviews(totalReviews);
-        wrapper.setAverageRating(averageRating);
-        return wrapper;
+        Map<String, Object> meta = new HashMap<>();
+        meta.put("average_rating", averageRating);
+        meta.put("total_rating", totalReviews);
+//        ReviewsWrapper wrapper = new ReviewsWrapper();
+//        wrapper.setReviews(reviews);
+//        wrapper.setTotalReviews(totalReviews);
+//        wrapper.setAverageRating(averageRating);
+
+        return ResponseEntity.ok().body(Resource.toCollection(reviews, ReviewResource.class, meta));
     }
 
     @PostMapping("/books/{bookId}/reviews")
