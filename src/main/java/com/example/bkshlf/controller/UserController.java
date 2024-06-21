@@ -17,16 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController
 {
-    private final UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<UserWrapper> register(@Valid @RequestBody RegistrationRequest request)
-    {
-        User registeredUser = userService.registerUser(request);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(registeredUser.getId());
-        userDTO.setEmail(registeredUser.getEmail());
 
-        return ResponseEntity.ok(new UserWrapper(userDTO));
-    }
 }

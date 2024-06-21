@@ -1,10 +1,7 @@
 package com.example.bkshlf.controller;
 
-import com.example.bkshlf.model.Book;
 import com.example.bkshlf.model.User;
-import com.example.bkshlf.service.LibraryService;
 import com.example.bkshlf.service.UserBookService;
-import com.example.bkshlf.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +20,6 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserBookController
 {
-    private final LibraryService libraryService;
     private final UserBookService userBookService;
 
     @PostMapping("/books/{bookId}/editions/{editionId}")

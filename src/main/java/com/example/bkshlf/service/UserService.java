@@ -1,5 +1,6 @@
 package com.example.bkshlf.service;
 
+import com.example.bkshlf.config.RestException;
 import com.example.bkshlf.dto.LoginResponse;
 import com.example.bkshlf.event.EventPublisherService;
 import com.example.bkshlf.event.UserRegisteredEvent;
@@ -10,6 +11,8 @@ import com.example.bkshlf.repository.UserRepository;
 import com.example.bkshlf.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,7 +43,12 @@ public class UserService
         User newUser = new User();
         newUser.setEmail(request.getEmail());
         newUser.setPassword(encodedPassword);
-        var user = userRepository.save(newUser);
+        User user = null;
+        try {
+            user = userRepository.save(newUser);
+        } catch (DataIntegrityViolationException e) {
+            throw new RestException(HttpStatus.CONFLICT, "Email already exists", e);
+        }
 
         UserRegisteredEvent event = new UserRegisteredEvent(this, user);
         publisherService.publishEvent(event);
