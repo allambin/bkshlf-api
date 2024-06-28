@@ -4,11 +4,13 @@ import com.example.bkshlf.model.Author;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
 @Setter
-public class AuthorResource extends Resource<Author, AuthorResource>
+public class AuthorResource extends Resource<Author>
 {
     public static String resourceWrapper = "author";
     public static String collectionWrapper = "authors";
@@ -18,11 +20,12 @@ public class AuthorResource extends Resource<Author, AuthorResource>
     private Set<BookResource> books;
 
     @Override
-    public AuthorResource toArray(Author model)
+    public Map<String, Object> toArray(Author model)
     {
-        this.setId(model.getId());
-        this.setName(model.getName());
-        this.setBooks(BookResource.toCollection(model.getBooks().forEach(BookResource::toArray))); // map toArray? // change to use non-static methods?
-        return this;
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", model.getId());
+        map.put("name", model.getName());
+        //this.setBooks(BookResource.toCollection(model.getBooks().forEach(BookResource::toArray))); // map toArray? // change to use non-static methods?
+        return map;
     }
 }

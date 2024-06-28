@@ -37,8 +37,9 @@ public class ReviewController
 //        wrapper.setReviews(reviews);
 //        wrapper.setTotalReviews(totalReviews);
 //        wrapper.setAverageRating(averageRating);
+        ReviewResource reviewResource = new ReviewResource();
 
-        return ResponseEntity.ok().body(Resource.toCollection(reviews, ReviewResource.class, meta));
+        return ResponseEntity.ok().body(reviewResource.toCollection(reviews, meta));
     }
 
     @PostMapping("/books/{bookId}/reviews")

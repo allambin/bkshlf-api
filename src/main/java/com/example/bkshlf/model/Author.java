@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name="authors")
-public class Author {
+public class Author extends BaseModel {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(

@@ -35,8 +35,10 @@ public class AuthorController
     public ResponseEntity<Object> show(@PathVariable("authorId") String authorId)
     {
         Author author = authorService.getAuthorWithBooks(authorId);
+        AuthorResource authorResource = new AuthorResource();
 //        AuthorWithBooksDTO authorWithBooksDTO = mapAuthorToDTO(author);
-        return ResponseEntity.ok().body(Resource.toResource(author, AuthorResource.class));
+        return ResponseEntity.ok().body(authorResource.toResource(author));
+//        return ResponseEntity.ok().body(Resource.toResource(author, AuthorResource.class));
 
 //        return new AuthorWrapper(authorWithBooksDTO);
     }

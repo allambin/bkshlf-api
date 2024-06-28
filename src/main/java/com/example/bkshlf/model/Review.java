@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name="reviews")
-public class Review implements AuditableBean
+public class Review extends BaseModel implements AuditableBean
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

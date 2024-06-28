@@ -5,9 +5,12 @@ import com.example.bkshlf.model.Review;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
-public class ReviewResource extends Resource<Review, ReviewResource>
+public class ReviewResource extends Resource<Review>
 {
     public static String resourceWrapper = "review";
     public static String collectionWrapper = "reviews";
@@ -17,11 +20,12 @@ public class ReviewResource extends Resource<Review, ReviewResource>
     private String content;
 
     @Override
-    public ReviewResource toArray(Review model)
+    public Map<String, Object> toArray(Review model)
     {
-        this.setId(model.getId());
-        this.setContent(model.getContent());
-        this.setRating(model.getRating());
-        return this;
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", model.getId());
+        map.put("content", model.getContent());
+        map.put("rating", model.getRating());
+        return map;
     }
 }

@@ -30,13 +30,16 @@ public class BookController
     public ResponseEntity<Object> showAll()
     {
         List<Book> books = bookService.getAllBooks();
-        return ResponseEntity.ok().body(Resource.toCollection(books, BookResource.class));
+        BookResource bookResource = new BookResource();
+        return ResponseEntity.ok().body(bookResource.toCollection(books));
     }
 
     @GetMapping("/{bookId}")
     public ResponseEntity<Object> show(@PathVariable("bookId") String bookId) throws RestException
     {
         Book book = bookService.getBook(bookId);
-        return ResponseEntity.ok().body(BookResource.toResource(book, BookResource.class));
+        BookResource bookResource = new BookResource();
+        return ResponseEntity.ok().body(bookResource.toResource(book));
+//        return ResponseEntity.ok().body(BookResource.toResource(book, BookResource.class));
     }
 }
