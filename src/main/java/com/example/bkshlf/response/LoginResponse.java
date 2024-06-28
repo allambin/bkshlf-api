@@ -1,4 +1,4 @@
-package com.example.bkshlf.dto;
+package com.example.bkshlf.response;
 
 import lombok.*;
 

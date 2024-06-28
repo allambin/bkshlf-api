@@ -1,7 +1,7 @@
 package com.example.bkshlf.service;
 
 
-import com.example.bkshlf.dto.LoginResponse;
+import com.example.bkshlf.response.LoginResponse;
 import com.example.bkshlf.model.LoginRequest;
 import com.example.bkshlf.model.User;
 import com.example.bkshlf.repository.UserRepository;

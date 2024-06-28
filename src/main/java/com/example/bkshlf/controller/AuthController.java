@@ -1,11 +1,10 @@
 package com.example.bkshlf.controller;
 
-import com.example.bkshlf.dto.LoginResponse;
-import com.example.bkshlf.dto.UserDTO;
+import com.example.bkshlf.response.LoginResponse;
 import com.example.bkshlf.model.LoginRequest;
 import com.example.bkshlf.model.RegistrationRequest;
 import com.example.bkshlf.model.User;
-import com.example.bkshlf.response.UserWrapper;
+import com.example.bkshlf.resource.UserResource;
 import com.example.bkshlf.service.AuthService;
 import com.example.bkshlf.service.UserService;
 import jakarta.validation.Valid;
@@ -39,13 +38,11 @@ public class AuthController
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserWrapper> register(@Valid @RequestBody RegistrationRequest request)
+    public ResponseEntity<Object> register(@Valid @RequestBody RegistrationRequest request)
     {
         User registeredUser = userService.registerUser(request);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(registeredUser.getId());
-        userDTO.setEmail(registeredUser.getEmail());
 
-        return ResponseEntity.ok(new UserWrapper(userDTO));
+        UserResource userResource = new UserResource();
+        return ResponseEntity.ok(userResource.toResource(registeredUser));
     }
 }
