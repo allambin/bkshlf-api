@@ -3,7 +3,6 @@ package com.example.bkshlf.controller;
 import com.example.bkshlf.config.RestException;
 import com.example.bkshlf.model.Book;
 import com.example.bkshlf.resource.BookResource;
-import com.example.bkshlf.resource.Resource;
 import com.example.bkshlf.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class BookController
     {
         List<Book> books = bookService.getAllBooks();
         BookResource bookResource = new BookResource();
-        return ResponseEntity.ok().body(bookResource.toCollection(books));
+        return ResponseEntity.ok().body(bookResource.route("books.all").toCollection(books));
     }
 
     @GetMapping("/{bookId}")
@@ -39,7 +38,6 @@ public class BookController
     {
         Book book = bookService.getBook(bookId);
         BookResource bookResource = new BookResource();
-        return ResponseEntity.ok().body(bookResource.toResource(book));
-//        return ResponseEntity.ok().body(BookResource.toResource(book, BookResource.class));
+        return ResponseEntity.ok().body(bookResource.route("books.show").toResource(book));
     }
 }

@@ -22,7 +22,8 @@ public class Book extends BaseModel {
     private String id;
     private String title;
     private String description;
-    private Integer series_order;
+    @Column(name = "series_order")
+    private Integer seriesOrder;
     @ManyToMany
     @JoinTable(
         name = "book_authors",

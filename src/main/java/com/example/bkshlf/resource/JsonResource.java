@@ -5,20 +5,27 @@ import com.example.bkshlf.model.BaseModel;
 import java.util.*;
 import java.util.stream.Collectors;
 
-abstract public class Resource<M extends BaseModel>
+abstract public class JsonResource<M extends BaseModel>
 {
-    private String resourceWrapper;
-    private String collectionWrapper;
+    protected String resourceWrapper;
+    protected String collectionWrapper;
+    protected String route;
 
-    public Resource()
+    public JsonResource()
     {
         this("data", "data");
     }
 
-    public Resource(String resourceWrapper, String collectionWrapper)
+    public JsonResource(String resourceWrapper, String collectionWrapper)
     {
         this.resourceWrapper = resourceWrapper;
         this.collectionWrapper = collectionWrapper;
+    }
+
+    public JsonResource<M> route(String route)
+    {
+        this.route = route;
+        return this;
     }
 
     public Map<String, Object> toResource(M model)

@@ -1,6 +1,5 @@
 package com.example.bkshlf.resource;
 
-import com.example.bkshlf.model.Book;
 import com.example.bkshlf.model.Review;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,14 +9,12 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class ReviewResource extends Resource<Review>
+public class ReviewResource extends JsonResource<Review>
 {
-    public static String resourceWrapper = "review";
-    public static String collectionWrapper = "reviews";
-
-    private long id;
-    private Integer rating;
-    private String content;
+    public ReviewResource()
+    {
+        super("review", "reviews");
+    }
 
     @Override
     public Map<String, Object> toArray(Review model)

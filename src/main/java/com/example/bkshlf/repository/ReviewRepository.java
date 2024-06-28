@@ -16,8 +16,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>
     List<Review> findAllForBookId(@Param("bookId") String bookId);
 
     @Query("SELECT AVG(rating) FROM Review r WHERE r.book.id = :bookId")
-    double getAverageRatingForBookId(@Param("bookId") String bookId);
+    Double getAverageRatingForBookId(@Param("bookId") String bookId);
 
     @Query("SELECT COUNT(*) FROM Review r WHERE r.book.id = :bookId")
-    long countAllForBookId(@Param("bookId") String bookId);
+    Long countAllForBookId(@Param("bookId") String bookId);
 }

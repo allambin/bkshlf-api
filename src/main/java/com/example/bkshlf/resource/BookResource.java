@@ -2,29 +2,16 @@ package com.example.bkshlf.resource;
 
 import com.example.bkshlf.model.Author;
 import com.example.bkshlf.model.Book;
-import com.example.bkshlf.model.Edition;
-import com.example.bkshlf.model.Series;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Setter
 @Getter
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-public class BookResource extends Resource<Book>
+public class BookResource extends JsonResource<Book>
 {
-    @JsonIgnore
-    public String resourceWrapper = "book";
-
-    @JsonIgnore
-    public String collectionWrapper = "books";
-
     public BookResource()
     {
         super("book", "books");
@@ -36,6 +23,15 @@ public class BookResource extends Resource<Book>
         Map<String, Object> map = new HashMap<>();
         map.put("id", model.getId());
         map.put("title", model.getTitle());
+        if (Objects.equals(this.route, "books.show")) {
+            AuthorResource authorResource = new AuthorResource();
+            List<Author> authors = new ArrayList<>(model.getAuthors());
+            map.putAll(authorResource.toCollection(authors));
+            map.put("description", model.getDescription());
+            map.put("series_order", model.getSeriesOrder());
+            map.put("series", model.getSeries());
+            map.put("editions", model.getEditions());
+        }
         return map;
     }
 }

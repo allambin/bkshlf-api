@@ -5,9 +5,6 @@ import com.example.bkshlf.dto.BookDTO;
 import com.example.bkshlf.model.Author;
 import com.example.bkshlf.model.Book;
 import com.example.bkshlf.resource.AuthorResource;
-import com.example.bkshlf.resource.BookResource;
-import com.example.bkshlf.resource.Resource;
-import com.example.bkshlf.response.AuthorWrapper;
 import com.example.bkshlf.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +33,7 @@ public class AuthorController
     {
         Author author = authorService.getAuthorWithBooks(authorId);
         AuthorResource authorResource = new AuthorResource();
-//        AuthorWithBooksDTO authorWithBooksDTO = mapAuthorToDTO(author);
         return ResponseEntity.ok().body(authorResource.toResource(author));
-//        return ResponseEntity.ok().body(Resource.toResource(author, AuthorResource.class));
-
-//        return new AuthorWrapper(authorWithBooksDTO);
     }
 
     private AuthorWithBooksDTO mapAuthorToDTO(Author author)

@@ -3,7 +3,6 @@ package com.example.bkshlf.controller;
 import com.example.bkshlf.model.Review;
 import com.example.bkshlf.model.User;
 import com.example.bkshlf.request.ReviewRequest;
-import com.example.bkshlf.resource.Resource;
 import com.example.bkshlf.resource.ReviewResource;
 import com.example.bkshlf.service.ReviewService;
 import jakarta.validation.Valid;
@@ -28,17 +27,12 @@ public class ReviewController
     public ResponseEntity<Object> showAllForBook(@PathVariable("bookId") String bookId)
     {
         List<Review> reviews = reviewService.getAllReviewsForBook(bookId);
-        double averageRating = reviewService.calculateAverageRatingForBook(bookId);
-        long totalReviews = reviewService.getTotalReviewsCountForBook(bookId);
+        Double averageRating = reviewService.calculateAverageRatingForBook(bookId);
+        Long totalReviews = reviewService.getTotalReviewsCountForBook(bookId);
         Map<String, Object> meta = new HashMap<>();
         meta.put("average_rating", averageRating);
-        meta.put("total_rating", totalReviews);
-//        ReviewsWrapper wrapper = new ReviewsWrapper();
-//        wrapper.setReviews(reviews);
-//        wrapper.setTotalReviews(totalReviews);
-//        wrapper.setAverageRating(averageRating);
+        meta.put("total_reviews", totalReviews);
         ReviewResource reviewResource = new ReviewResource();
-
         return ResponseEntity.ok().body(reviewResource.toCollection(reviews, meta));
     }
 

@@ -24,12 +24,12 @@ public class ReviewService
         return reviewRepository.findAllForBookId(bookId);
     }
 
-    public double calculateAverageRatingForBook(String bookId)
+    public Double calculateAverageRatingForBook(String bookId)
     {
         return reviewRepository.getAverageRatingForBookId(bookId);
     }
 
-    public long getTotalReviewsCountForBook(String bookId)
+    public Long getTotalReviewsCountForBook(String bookId)
     {
         return reviewRepository.countAllForBookId(bookId);
     }
