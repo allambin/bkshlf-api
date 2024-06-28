@@ -7,6 +7,7 @@ import com.example.bkshlf.resource.ReviewResource;
 import com.example.bkshlf.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,14 +25,15 @@ public class ReviewController
     private final ReviewService reviewService;
 
     @GetMapping("/books/{bookId}/reviews")
-    public ResponseEntity<Object> showAllForBook(@PathVariable("bookId") String bookId)
+    public ResponseEntity<Object> showAllForBook(@PathVariable("bookId") String bookId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size)
     {
-        List<Review> reviews = reviewService.getAllReviewsForBook(bookId);
+        Page<Review> paginatedReviews = reviewService.getAllReviewsForBook(bookId, page, size);
+        List<Review> reviews = paginatedReviews.get().toList();
         Double averageRating = reviewService.calculateAverageRatingForBook(bookId);
-        Long totalReviews = reviewService.getTotalReviewsCountForBook(bookId);
+//        Long totalReviews = reviewService.getTotalReviewsCountForBook(bookId);
         Map<String, Object> meta = new HashMap<>();
         meta.put("average_rating", averageRating);
-        meta.put("total_reviews", totalReviews);
+        meta.put("total_reviews", paginatedReviews.getTotalElements());
         ReviewResource reviewResource = new ReviewResource();
         return ResponseEntity.ok().body(reviewResource.toCollection(reviews, meta));
     }

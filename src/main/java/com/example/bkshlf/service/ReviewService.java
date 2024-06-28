@@ -7,7 +7,9 @@ import com.example.bkshlf.model.User;
 import com.example.bkshlf.repository.BookRepository;
 import com.example.bkshlf.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +21,9 @@ public class ReviewService
     private final ReviewRepository reviewRepository;
     private final BookRepository bookRepository;
 
-    public List<Review> getAllReviewsForBook(String bookId)
+    public Page<Review> getAllReviewsForBook(String bookId, int page, int size)
     {
-        return reviewRepository.findAllForBookId(bookId);
+        return reviewRepository.findAllForBookId(bookId, PageRequest.of(page, size));
     }
 
     public Double calculateAverageRatingForBook(String bookId)
