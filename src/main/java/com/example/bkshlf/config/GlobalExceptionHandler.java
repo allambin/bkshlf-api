@@ -37,7 +37,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler(RestException.class)
     public ResponseEntity<ErrorResponse> handleRestException(RestException ex)
     {
-        ErrorResponse e = createErrorResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, ex);
+        ErrorResponse e = createErrorResponse(ex.getMessage(), ex.getHttpStatus(), ex);
         return new ResponseEntity<>(e, ex.getHttpStatus());
     }
 

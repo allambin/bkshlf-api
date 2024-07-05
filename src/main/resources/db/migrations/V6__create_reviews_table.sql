@@ -2,8 +2,8 @@
 
 CREATE TABLE reviews (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    book_id VARCHAR(36),
-    user_id BIGINT,
+    book_id VARCHAR(36) NOT NULL,
+    user_id BIGINT NOT NULL,
     rating INT CHECK (rating >= 1 AND rating <= 5),
     content TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
